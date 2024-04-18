@@ -2,6 +2,7 @@ import pygame
 import sys
 import subprocess
 import cv2
+import player
 from moviepy.editor import VideoFileClip
 # Initialize Pygame
 pygame.init()
@@ -15,11 +16,32 @@ def playvideo(video_path):
     clip = VideoFileClip(video_path)
     clip.preview()
     clip.close()
-
 def level():
     SCREEN_WIDTH = 1440
     SCREEN_HEIGHT = 1080
-    background_image = pygame.image.load('levelbg.jpg')
+    # SCREEN_HEIGHT,SCREEN_WIDTH=pygame.display.Info().current_h,pygame.display.Info().current_w
+    background_image = pygame.image.load('levelbg1.png')
+    background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    pygame.display.set_caption('Game Cover Page')
+    screen.blit(background_image, (0, 0)) 
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key==pygame.K_RETURN:
+                    pygame.quit()
+                    subprocess.run(['python3', 'player.py'])
+                    sys.exit()
+                    # call game 
+        pygame.display.update()
+def level1():
+    SCREEN_WIDTH = 1440
+    SCREEN_HEIGHT = 1080
+    # background_image = pygame.image.load('levelbg.jpg')
+    background_image = pygame.image.load('levelbg1.png')
     background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
     button_sound=pygame.mixer.Sound('clickbutton.mp3')
     WHITE = (255, 255, 255)
@@ -51,94 +73,100 @@ def level():
     
 
     # Scale button images
-    next_button_img = pygame.transform.scale(next_button_img, (BUTTON_WIDTH, BUTTON_HEIGHT))
-    prev_button_img = pygame.transform.scale(prev_button_img, (BUTTON_WIDTH, BUTTON_HEIGHT))
-    level1_img = pygame.transform.scale(level1_img, (BUTTON_WIDTH, BUTTON_HEIGHT))
-    level2_img = pygame.transform.scale(level2_img, (BUTTON_WIDTH, BUTTON_HEIGHT))
-    level3_img = pygame.transform.scale(level3_img, (BUTTON_WIDTH, BUTTON_HEIGHT))
-    level4_img = pygame.transform.scale(level4_img, (BUTTON_WIDTH, BUTTON_HEIGHT))
-    level5_img = pygame.transform.scale(level5_img, (BUTTON_WIDTH, BUTTON_HEIGHT))
+    # next_button_img = pygame.transform.scale(next_button_img, (BUTTON_WIDTH, BUTTON_HEIGHT))
+    # prev_button_img = pygame.transform.scale(prev_button_img, (BUTTON_WIDTH, BUTTON_HEIGHT))
+    # level1_img = pygame.transform.scale(level1_img, (BUTTON_WIDTH, BUTTON_HEIGHT))
+    # level2_img = pygame.transform.scale(level2_img, (BUTTON_WIDTH, BUTTON_HEIGHT))
+    # level3_img = pygame.transform.scale(level3_img, (BUTTON_WIDTH, BUTTON_HEIGHT))
+    # level4_img = pygame.transform.scale(level4_img, (BUTTON_WIDTH, BUTTON_HEIGHT))
+    # level5_img = pygame.transform.scale(level5_img, (BUTTON_WIDTH, BUTTON_HEIGHT))
     # Initialize screen
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption('Game Cover Page')
+    screen.blit(background_image, (0, 0))    
     selected_button = 'LEVEL1'
     
     while True:
         # draw_buttons(selected_button,screen,background_image,PLAY_BUTTON_X,PLAY_BUTTON_Y,BUTTON_WIDTH,BUTTON_HEIGHT,next_button_img,BUTTON_BORDER,prev_button_img,EXIT_BUTTON_X,EXIT_BUTTON_Y)
-        draw_buttons1(selected_button,screen,background_image,PLAY_BUTTON_X,PLAY_BUTTON_Y,BUTTON_WIDTH,BUTTON_HEIGHT,next_button_img,BUTTON_BORDER,prev_button_img,EXIT_BUTTON_X,EXIT_BUTTON_Y,level1_img,level1_button_x,level1_button_y,level2_img,level2_button_x,level2_button_y,level3_img,level3_button_x,level3_button_y,level4_img,level4_button_x,level4_button_y,level5_img,level5_button_x,level5_button_y)
+        # draw_buttons1(selected_button,screen,background_image,PLAY_BUTTON_X,PLAY_BUTTON_Y,BUTTON_WIDTH,BUTTON_HEIGHT,next_button_img,BUTTON_BORDER,prev_button_img,EXIT_BUTTON_X,EXIT_BUTTON_Y,level1_img,level1_button_x,level1_button_y,level2_img,level2_button_x,level2_button_y,level3_img,level3_button_x,level3_button_y,level4_img,level4_button_x,level4_button_y,level5_img,level5_button_x,level5_button_y)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                    button_sound.play()
-                    if selected_button=='LEVEL1' and event.key == pygame.K_RIGHT:
-                        selected_button = 'EXIT'
-                    elif selected_button=='LEVEL2' and event.key == pygame.K_RIGHT:
-                        selected_button = 'EXIT'
-                    elif selected_button=='LEVEL3' and event.key == pygame.K_RIGHT:
-                        selected_button = 'EXIT'
-                    elif selected_button=='LEVEL4' and event.key == pygame.K_RIGHT:
-                        selected_button = 'EXIT'
-                    elif selected_button=='LEVEL5' and event.key == pygame.K_RIGHT:
-                        selected_button = 'EXIT'
-                    if selected_button=='LEVEL1' and event.key == pygame.K_LEFT:
-                        selected_button = 'PLAY'
-                    elif selected_button=='LEVEL2' and event.key == pygame.K_LEFT:
-                        selected_button = 'PLAY'
-                    elif selected_button=='LEVEL3' and event.key == pygame.K_LEFT:
-                        selected_button = 'PLAY'
-                    elif selected_button=='LEVEL4' and event.key == pygame.K_LEFT:
-                        selected_button = 'PLAY'
-                    elif selected_button=='LEVEL5' and event.key == pygame.K_LEFT:
-                        selected_button = 'PLAY'
-                    elif selected_button == 'PLAY' and event.key == pygame.K_RIGHT:
-                        selected_button = 'LEVEL1'
-                    elif selected_button == 'EXIT' and event.key == pygame.K_LEFT:
-                        selected_button = 'LEVEL1'
-                    # selected_button = 'EXIT' if selected_button == 'PLAY' else 'PLAY'
-                elif event.key == pygame.K_RETURN:
-                    if selected_button == 'PLAY':
-                        timeline3()
-                    elif selected_button == 'EXIT':
-                        pygame.quit()
-                        sys.exit()
-                    elif selected_button == 'LEVEL1':
-                        # level1
-                        print('level 1')
-                    elif selected_button == 'LEVEL2':
-                        print('level 2')
-                    elif selected_button == 'LEVEL3':
-                        print('level 3')
-                    elif selected_button == 'LEVEL4':
-                        print('level 4')
-                    elif selected_button == 'LEVEL5':
-                        print('level 5')
-                elif event.key == pygame.K_UP:
-                    button_sound.play()
-                    if selected_button == 'LEVEL1':
-                        selected_button = 'LEVEL5'
-                    elif selected_button == 'LEVEL2':
-                        selected_button = 'LEVEL1'
-                    elif selected_button == 'LEVEL3':
-                        selected_button = 'LEVEL2'
-                    elif selected_button == 'LEVEL4':
-                        selected_button = 'LEVEL3'
-                    elif selected_button == 'LEVEL5':
-                        selected_button = 'LEVEL4'
-                elif event.key == pygame.K_DOWN:
-                    button_sound.play()
-                    if selected_button == 'LEVEL1':
-                        selected_button = 'LEVEL2'
-                    elif selected_button == 'LEVEL2':
-                        selected_button = 'LEVEL3'
-                    elif selected_button == 'LEVEL3':
-                        selected_button = 'LEVEL4'
-                    elif selected_button == 'LEVEL4':
-                        selected_button = 'LEVEL5'
-                    elif selected_button == 'LEVEL5':
-                        selected_button = 'LEVEL1'
+                if event.key==pygame.K_RETURN:
+                    pygame.quit()
+                    sys.exit()
+                # if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                #     button_sound.play()
+                #     if selected_button=='LEVEL1' and event.key == pygame.K_RIGHT:
+                #         selected_button = 'EXIT'
+                #     elif selected_button=='LEVEL2' and event.key == pygame.K_RIGHT:
+                #         selected_button = 'EXIT'
+                #     elif selected_button=='LEVEL3' and event.key == pygame.K_RIGHT:
+                #         selected_button = 'EXIT'
+                #     elif selected_button=='LEVEL4' and event.key == pygame.K_RIGHT:
+                #         selected_button = 'EXIT'
+                #     elif selected_button=='LEVEL5' and event.key == pygame.K_RIGHT:
+                #         selected_button = 'EXIT'
+                #     if selected_button=='LEVEL1' and event.key == pygame.K_LEFT:
+                #         selected_button = 'PLAY'
+                #     elif selected_button=='LEVEL2' and event.key == pygame.K_LEFT:
+                #         selected_button = 'PLAY'
+                #     elif selected_button=='LEVEL3' and event.key == pygame.K_LEFT:
+                #         selected_button = 'PLAY'
+                #     elif selected_button=='LEVEL4' and event.key == pygame.K_LEFT:
+                #         selected_button = 'PLAY'
+                #     elif selected_button=='LEVEL5' and event.key == pygame.K_LEFT:
+                #         selected_button = 'PLAY'
+                #     elif selected_button == 'PLAY' and event.key == pygame.K_RIGHT:
+                #         selected_button = 'LEVEL1'
+                #     elif selected_button == 'EXIT' and event.key == pygame.K_LEFT:
+                #         selected_button = 'LEVEL1'
+                #     # selected_button = 'EXIT' if selected_button == 'PLAY' else 'PLAY'
+                # elif event.key == pygame.K_RETURN:
+                #     if selected_button == 'PLAY':
+                #         timeline3()
+                #     elif selected_button == 'EXIT':
+                #         # call game
+                #         pygame.quit()
+                #         sys.exit()
+                #     elif selected_button == 'LEVEL1':
+                #         # level1
+                #         print('level 1')
+                #     elif selected_button == 'LEVEL2':
+                #         print('level 2')
+                #     elif selected_button == 'LEVEL3':
+                #         print('level 3')
+                #     elif selected_button == 'LEVEL4':
+                #         print('level 4')
+                #     elif selected_button == 'LEVEL5':
+                #         print('level 5')
+                # elif event.key == pygame.K_UP:
+                #     button_sound.play()
+                #     if selected_button == 'LEVEL1':
+                #         selected_button = 'LEVEL5'
+                #     elif selected_button == 'LEVEL2':
+                #         selected_button = 'LEVEL1'
+                #     elif selected_button == 'LEVEL3':
+                #         selected_button = 'LEVEL2'
+                #     elif selected_button == 'LEVEL4':
+                #         selected_button = 'LEVEL3'
+                #     elif selected_button == 'LEVEL5':
+                #         selected_button = 'LEVEL4'
+                # elif event.key == pygame.K_DOWN:
+                #     button_sound.play()
+                #     if selected_button == 'LEVEL1':
+                #         selected_button = 'LEVEL2'
+                #     elif selected_button == 'LEVEL2':
+                #         selected_button = 'LEVEL3'
+                #     elif selected_button == 'LEVEL3':
+                #         selected_button = 'LEVEL4'
+                #     elif selected_button == 'LEVEL4':
+                #         selected_button = 'LEVEL5'
+                #     elif selected_button == 'LEVEL5':
+                #         selected_button = 'LEVEL1'
+        pygame.display.update()
 
 
 def draw_buttons1(selected_button,screen,background_image,PLAY_BUTTON_X,PLAY_BUTTON_Y,BUTTON_WIDTH,BUTTON_HEIGHT,play_button_img,BUTTON_BORDER,exit_button_img,EXIT_BUTTON_X,EXIT_BUTTON_Y,level1_img,level1_button_x,level1_button_y,level2_img,level2_button_x,level2_button_y,level3_img,level3_button_x,level3_button_y,level4_img,level4_button_x,level4_button_y,level5_img,level5_button_x,level5_button_y):
@@ -298,7 +326,7 @@ def timeline3():
 def timeline2():
     SCREEN_WIDTH = 1440
     SCREEN_HEIGHT = 1080
-    # SCREEN_HEIGHT,SCREEN_WIDTH=pygame.display.Info().current_h,pygame.display.Info().current_w
+    SCREEN_HEIGHT,SCREEN_WIDTH=pygame.display.Info().current_h,pygame.display.Info().current_w
     # Load background image
     background_image = pygame.image.load('timeline2bg.jpg')
     background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
