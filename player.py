@@ -10,6 +10,9 @@ import time
 pygame.init()
 clock=pygame.time.Clock()
 fps=60
+pygame.mixer.music.load('sahu_music.mp3')
+pygame.mixer.music.set_volume(0.05)  # Set volume to 50%
+pygame.mixer.music.play(loops=-1)  # Play music indefinitely
 scroll_limit=200
 s_scroll=0
 bg_scroll=0
@@ -24,10 +27,13 @@ SCREEN_HEIGHT = SCREEN_WIDTH*0.8
 # screen = pygame.display.set_mode((screen_width, screen_height))
 shootsound=pygame.mixer.Sound('shot.wav')
 bonussound=pygame.mixer.Sound('bonus.wav')
+explosionsound = pygame.mixer.Sound('explosionsound.mp3')
 shootsound.set_volume(0.2)
 bonussound.set_volume(0.1)
 tile_size=SCREEN_HEIGHT//n_row
 tiletypes=27
+gcnt = 0
+dead_by_explosion = False
 paused=False
 game_over = 0
 screen=pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
@@ -190,7 +196,7 @@ class Player(pygame.sprite.Sprite):
             self.speed = 0
             self.zinda = False
             self.change_action(3)
-            show_gameover()
+            # show_gameover()
 
     def draw(self):
         screen.blit(pygame.transform.flip(self.img,self.flip,False),self.rect)
@@ -313,6 +319,7 @@ def show_wrongans():
 def get_text(self):
     global game_over
     global question_idx
+    global dead_by_explosion
     height=400
     width=400
     global paused
@@ -350,14 +357,16 @@ def get_text(self):
                             pass
                         paused = False
                         return
-                elif count==2:
+                elif count==1:
                     print("incorrect attempt")
                         #explosion
                     game_over = 1
-                    explosion=Explosion(self.rect.x+40,self.rect.y+60,3)
+                    explosionsound.play()
+                    explosion=Explosion(self.rect.x+40,self.rect.y+60,6)
                     explosion_group.add(explosion)
                     # player1.zinda=False
                     player1.health=-1
+                    dead_by_explosion = True
                     paused=False
                     return
                 else:
@@ -500,7 +509,8 @@ class Timebar():
                 # print("decrease")
                 player1.health = -1
                 game_over=1
-                explosion = Explosion(player1.rect.x + 40,player1.rect.y + 60,3)
+                explosionsound.play()
+                explosion = Explosion(player1.rect.x + 40,player1.rect.y + 60,4)
                 explosion_group.add_internal(explosion)
             self.last_update_time = current_time
 
@@ -633,7 +643,8 @@ def main():
     global player1
     global timebar
     global question_idx
-
+    global gcnt
+    global dead_by_explosion
     run=True
     while run:
         clock.tick(fps)
@@ -652,6 +663,9 @@ def main():
             timebar.draw()
             timebar.update()
         item_box_group.update()
+        if player1.health < 1 and gcnt == 0 and (dead_by_explosion==False):
+            show_gameover()
+            gcnt =1
         if game_over<32 and game_over>0 :
             explosion_group.draw(screen)
             explosion_group.update()

@@ -17,8 +17,10 @@ def playvideo(video_path):
     clip.preview()
     clip.close()
 def level():
-    SCREEN_WIDTH = 1440
-    SCREEN_HEIGHT = 1080
+    SCREEN_WIDTH = 1000
+    SCREEN_HEIGHT = 800
+    # SCREEN_WIDTH_SAHU = 1000
+    # SCREEN_HEIGHT_SAHU = 800
     # SCREEN_HEIGHT,SCREEN_WIDTH=pygame.display.Info().current_h,pygame.display.Info().current_w
     background_image = pygame.image.load('levelbg1.png')
     background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -38,8 +40,8 @@ def level():
                     # call game 
         pygame.display.update()
 def level1():
-    SCREEN_WIDTH = 1440
-    SCREEN_HEIGHT = 1080
+    SCREEN_WIDTH = 1000
+    SCREEN_HEIGHT = 800
     # background_image = pygame.image.load('levelbg.jpg')
     background_image = pygame.image.load('levelbg1.png')
     background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -251,8 +253,8 @@ def draw_buttons(selected_button,screen,background_image,PLAY_BUTTON_X,PLAY_BUTT
     pygame.display.update()
 
 def timeline3():
-    SCREEN_WIDTH = 1440
-    SCREEN_HEIGHT = 1080
+    SCREEN_WIDTH = 1000
+    SCREEN_HEIGHT = 800
     # SCREEN_HEIGHT,SCREEN_WIDTH=pygame.display.Info().current_h,pygame.display.Info().current_w
     # Load background image
     background_image = pygame.image.load('timeline3bg.jpg')
@@ -316,7 +318,7 @@ def timeline3():
                         # subprocess.run(["python3", "levels.py"])
                         # print('Exiting the game...')
                         pygame.mixer_music.pause()
-                        playvideo('timetravel.mp4')
+                        playvideo('timetravel2.mp4')
                         pygame.mixer_music.unpause()
                         level()
                         # pygame.quit()
@@ -324,8 +326,8 @@ def timeline3():
 
 
 def timeline2():
-    SCREEN_WIDTH = 1440
-    SCREEN_HEIGHT = 1080
+    SCREEN_WIDTH = 1000
+    SCREEN_HEIGHT = 800
     SCREEN_HEIGHT,SCREEN_WIDTH=pygame.display.Info().current_h,pygame.display.Info().current_w
     # Load background image
     background_image = pygame.image.load('timeline2bg.jpg')
@@ -393,8 +395,8 @@ def timeline2():
 
 
 def timeline():
-    SCREEN_WIDTH = 1440
-    SCREEN_HEIGHT = 1080
+    SCREEN_WIDTH = 1000
+    SCREEN_HEIGHT = 800
     # SCREEN_HEIGHT,SCREEN_WIDTH=pygame.display.Info().current_h,pygame.display.Info().current_w
     # Load background image
     background_image = pygame.image.load('timelinebg.jpg')
@@ -461,8 +463,8 @@ def timeline():
                         # sys.exit()
 
 def coverpage():
-    SCREEN_WIDTH = 1440
-    SCREEN_HEIGHT = 1080
+    SCREEN_WIDTH = 1000
+    SCREEN_HEIGHT = 800
     # SCREEN_HEIGHT,SCREEN_WIDTH=pygame.display.Info().current_h,pygame.display.Info().current_w
     # Load background image
     background_image = pygame.image.load('bg.jpg')

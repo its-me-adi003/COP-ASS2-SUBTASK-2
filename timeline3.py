@@ -7,8 +7,8 @@ pygame.init()
 # pygame.mixer_music.load('musicpoc.mp3')
 # pygame.mixer_music.play(-1)
 # Screen dimensions
-SCREEN_WIDTH = 1440
-SCREEN_HEIGHT = 1080
+SCREEN_WIDTH = 1000
+SCREEN_HEIGHT = 800
 # SCREEN_HEIGHT,SCREEN_WIDTH=pygame.display.Info().current_h,pygame.display.Info().current_w
 # Load background image
 background_image = pygame.image.load('timeline3bg.jpg')
